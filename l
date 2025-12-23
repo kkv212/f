@@ -632,19 +632,8 @@ RunService.RenderStepped:Connect(function(dt)
                 horizontalOffset = obj.baseOffsetX - (sign * math.abs(obj.baseOffsetX) * horizontalShrink)
             end
             
-            -- 羽モードの場合の追加オフセット
-            local wingHeightOffset = 0
-            local wingForwardOffset = 0
-            if rowConfig.wingMode then
-                local wingSign = obj.baseOffsetX > 0 and 1 or -1
-                local wingDist = math.abs(obj.baseOffsetX)
-                local angleRad = math.rad(rowConfig.wingAngle)
-                wingHeightOffset = wingDist * rowConfig.wingSpread * math.sin(angleRad) * wingSign
-                wingForwardOffset = wingDist * rowConfig.wingSpread * math.cos(angleRad)
-            end
-            
-            local targetPosition = basePosition + (rightVector * horizontalOffset) + (lookVector * wingForwardOffset)
-            local finalPosition = targetPosition + Vector3.new(0, waveMovement + wingHeightOffset, 0)
+            local targetPosition = basePosition + (rightVector * horizontalOffset)
+            local finalPosition = targetPosition + Vector3.new(0, waveMovement, 0)
             
             if point.part then
                 point.part.Position = finalPosition
